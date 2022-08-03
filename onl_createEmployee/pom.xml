@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>elara-project</artifactId>
+		<groupId>com.bbva.elara</groupId>
+		<version>7.7.10</version>
+	</parent>
+	<artifactId>onl_createEmployee</artifactId>
+	<groupId>com.bbva.ccol</groupId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>onl_createEmployee</name>
+	<description>Unidad de despliegue para la creación de empleados dentro de la base de datos Oracle</description>
+	<properties>
+		<apx.core.online.version>7.7.10</apx.core.online.version>
+		<outputDirectoryDTOs>../../../target/dtos</outputDirectoryDTOs>
+		<outputDirectoryLibraries>../../../target/libraries</outputDirectoryLibraries>
+		<outputDirectoryTransactions>../../../target/transactions</outputDirectoryTransactions>
+		<jacoco.no.coverage>0.00</jacoco.no.coverage>
+		<jacoco.min.coverage>0.80</jacoco.min.coverage>
+		<jacoco.type.coverage>COMPLEXITY</jacoco.type.coverage>
+	</properties>
+	<modules>
+		<module>artifact/dtos</module>
+		<module>artifact/libraries</module>
+		<module>artifact/transactions</module>
+	</modules>
+</project>
