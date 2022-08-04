@@ -12,5 +12,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>TRANSACTIONS-onl_createEmployee</name>
-	<modules/>
+	<modules>
+		<module>CCOLT001-01-CO</module>
+	</modules>
 </project>
