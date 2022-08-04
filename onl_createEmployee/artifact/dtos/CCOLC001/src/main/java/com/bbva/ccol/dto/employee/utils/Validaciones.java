@@ -1,8 +1,8 @@
 package com.bbva.ccol.dto.employee.utils;
 
 public enum Validaciones {
-    RFC_PER(12),
-    RFC_EMP(13),
+    RFC_PER(13),
+    RFC_EMP(12),
    ;
 
     private int params;

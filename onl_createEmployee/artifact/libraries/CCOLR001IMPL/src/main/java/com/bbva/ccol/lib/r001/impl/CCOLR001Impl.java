@@ -21,7 +21,7 @@ public class CCOLR001Impl extends CCOLR001Abstract {
 	 * The execute method...
 	 */
 	@Override
-	public int executeCreateCustomer(EmployeeDTO employeeDTO) {
+	public int executeCreateEmployee(EmployeeDTO employeeDTO) {
 		Map<String, Object> mapa = new HashMap<>();
 		mapa.put("employee_number",employeeDTO.getEmployee_number());
 		mapa.put("employee_name",employeeDTO.getEmployee_name());

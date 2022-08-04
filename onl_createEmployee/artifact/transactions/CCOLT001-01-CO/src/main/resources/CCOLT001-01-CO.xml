@@ -14,6 +14,8 @@
 			<parameter order="10" name="salary" mandatory="1" type="Long" size="16"/>
 		</dto>
 	</paramsIn>
-	<paramsOut/>
+	<paramsOut>
+		<parameter order="1" name="mensaje" mandatory="0" type="String" size="650"/>
+	</paramsOut>
 	<description>Método de creación de empleado para base de datos Oracle</description>
 </transaction>

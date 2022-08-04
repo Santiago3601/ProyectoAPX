@@ -5,7 +5,6 @@ import com.bbva.ccol.dto.employee.utils.DominosCorreos;
 import com.bbva.ccol.dto.employee.utils.Validaciones;
 import com.bbva.ccol.lib.r001.CCOLR001;
 import com.bbva.elara.domain.transaction.Advice;
-import com.bbva.elara.domain.transaction.Severity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +20,7 @@ public class CCOLT00101COTransaction extends AbstractCCOLT00101COTransaction {
 
     private static final String ADD_ADVICE_ERROR = "CCOL00010001";
 
-    private StringBuilder respuesta;
+    private StringBuilder respuesta = new StringBuilder();
 
 
     /**
@@ -33,29 +32,15 @@ public class CCOLT00101COTransaction extends AbstractCCOLT00101COTransaction {
         EmployeeDTO employeeDTO = this.getEmployeedto();
         Advice advice = null;
         if (validacionCampos(employeeDTO)) {
-            ccolR001.executeCreateCustomer(employeeDTO);
-            advice = this.getAdvice();  // ADVICE = NULL, NO HAY ERROR
-
-
-            if (advice != null) {
-                LOGGER.error("ERROR: AL CREAR EL EMPLEADO EN BD...");
-                setSeverity(Severity.EWR);
-            }
-        } else {
-            LOGGER.info("ERROR AL VALIDAR CAMPOS DE ENTRADA");
-
-            // Rango de error asignado al aplicativo ejemplo: (00010001 al 00010101
-            // asignar el codigo de error : UUAA + 8 NUMEROS
-            addAdvice(ADD_ADVICE_ERROR);
-            setSeverity(Severity.WARN);
+            this.respuesta.append("La estructura ingresada es correcta \n");
+            ccolR001.executeCreateEmployee(employeeDTO);
         }
+        //Devolver mensaje
+        this.setMensaje(this.respuesta.toString());
     }
 
-    private boolean validacionCampos(EmployeeDTO employeeDTO) {
 
-        return true;
-    }
-/*
+
     private boolean validacionCampos(EmployeeDTO employeeDTO) {
         boolean resultado = true;
 
@@ -73,42 +58,35 @@ public class CCOLT00101COTransaction extends AbstractCCOLT00101COTransaction {
 
         //Validación de RFC
         //Validar tamaño del RFC
-        String rfc =employeeDTO.getEmployee_RFC().trim();
-        boolean errorRFC=false;
+        String rfc =employeeDTO.getEmployee_rfc().trim();
         if (rfc.length() == Validaciones.RFC_PER.getValues()){
             //Válida que las primeras cuatro letras solo sean letras
-            if (rfc.substring(0,3).matches("[0-9]+")) {
-                this.respuesta.append("Error al validar estructura RFC \n");
-                errorRFC=true;
+            if (rfc.substring(0,3).matches("(.*)[0-9]+(.*)")) {
+                this.respuesta.append("No se permiten números en el nombre dentro de la estructura RFC \n");
             }
             //Válida que los 6 siguientes caracteres sean numéricos
-            if (rfc.substring(4,10).matches("[a-zA-Z]")&&!errorRFC) {
-                this.respuesta.append("Error al validar estructura RFC \n");
-                errorRFC=true;
+            if (rfc.substring(4,10).matches("(.*)[a-zA-Z](.*)")) {
+                this.respuesta.append("Se encontraron caracteres dentro de la fecha de nacimiento en la estructura RFC \n");
             }
 
 
         } else if (rfc.length() == Validaciones.RFC_EMP.getValues()) {
             //Válida que las primeras cuatro letras solo sean letras
-            if (rfc.substring(0,4).matches("[0-9]+")) {
-                this.respuesta.append("Error al validar estructura RFC \n");
-                errorRFC=true;
+            if (rfc.substring(0,3).matches("(.*)[0-9]+(.*)")) {
+                this.respuesta.append("No se permiten números en el nombre dentro de la estructura RFC \n");
             }
             //Válida que los 6 siguientes caracteres sean numéricos
-            if (rfc.substring(3,9).matches("[a-zA-Z]")&&!errorRFC) {
-                this.respuesta.append("Error al validar estructura RFC \n");
-                errorRFC=true;
+            if (rfc.substring(3,9).matches("(.*)[a-zA-Z](.*)")) {
+                this.respuesta.append("Se encontraron caracteres dentro de la fecha de nacimiento en la estructura RFC \n");
             }
         }else{
             this.respuesta.append("Error al validar tamaño de RFC \n");
-            errorRFC=true;
-        }
-        if(errorRFC){
-            resultado = false;
+
         }
 
+
         //Validar caracteres especiales
-        if (!validacionCaracteres(employeeDTO.getEmployee_RFC())) {
+        if (!validacionCaracteres(employeeDTO.getEmployee_rfc())) {
             this.respuesta.append("Caracteres especiales en RFC del empleado \n");
             resultado = false;
         }
@@ -146,7 +124,7 @@ public class CCOLT00101COTransaction extends AbstractCCOLT00101COTransaction {
 
         return resultado;
     }
-*/
+
     private boolean validacionCaracteres(String cadena) {
         return cadena.matches("^[a-zA-Z0-9]+$");
     }

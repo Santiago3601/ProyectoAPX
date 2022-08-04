@@ -18,4 +18,11 @@ public abstract class AbstractCCOLT00101COTransaction extends AbstractTransactio
 	protected EmployeeDTO getEmployeedto(){
 		return (EmployeeDTO)this.getParameter("employeeDTO");
 	}
+
+	/**
+	 * Set value for String output parameter mensaje
+	 */
+	protected void setMensaje(final String field){
+		this.addParameter("mensaje", field);
+	}
 }

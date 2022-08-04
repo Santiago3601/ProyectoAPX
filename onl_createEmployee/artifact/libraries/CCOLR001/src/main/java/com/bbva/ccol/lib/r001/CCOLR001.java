@@ -10,6 +10,6 @@ public interface CCOLR001 {
 	/**
 	 * The execute method...
 	 */
-	int executeCreateCustomer(EmployeeDTO employeeDTO);
+	int executeCreateEmployee(EmployeeDTO employeeDTO);
 
 }
