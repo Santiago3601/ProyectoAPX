@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<transaction xmlns="http://www.w3schools.com" transactionName="CCOLT005" application="CCOL" version="01" country="CO" language="ES">
+	<paramsIn>
+		<dto order="1" name="paginationIn" mandatory="1" package="com.bbva.ccol.dto.employees.pagination.PaginationIn" artifactId="CCOLC005">
+			<parameter order="1" name="paginationKey" mandatory="1" type="String" size="3"/>
+			<parameter order="2" name="pageSize" mandatory="1" type="Long" size="3"/>
+		</dto>
+	</paramsIn>
+	<paramsOut>
+		<list order="1" name="employeeDTOList" mandatory="0">
+			<dto order="1" name="EmployeeDTO" mandatory="0" package="com.bbva.ccol.dto.employees.EmployeeDTO" artifactId="CCOLC005">
+				<parameter order="1" name="employee_number" mandatory="1" type="Long" size="10"/>
+				<parameter order="2" name="employee_name" mandatory="1" type="String" size="50"/>
+				<parameter order="3" name="employee_department" mandatory="1" type="String" size="50"/>
+				<parameter order="4" name="employee_rfc" mandatory="1" type="String" size="20"/>
+				<parameter order="5" name="employee_email" mandatory="1" type="String" size="20"/>
+				<parameter order="6" name="employee_phone" mandatory="1" type="String" size="20"/>
+				<parameter order="7" name="employee_address" mandatory="1" type="String" size="20"/>
+				<parameter order="8" name="employee_registration_date" mandatory="1" type="Date (YYYY-MM-DD)" size="0"/>
+				<parameter order="9" name="employee_status" mandatory="1" type="Long" size="10"/>
+				<parameter order="10" name="salary" mandatory="1" type="Long" size="16"/>
+			</dto>
+		</list>
+		<dto order="2" name="paginationOut" mandatory="0" package="com.bbva.ccol.dto.employees.response.PaginationOut" artifactId="CCOLC005">
+			<dto order="1" name="references" mandatory="0" package="com.bbva.ccol.dto.employees.response.References" artifactId="CCOLC005">
+				<parameter order="1" name="lastPage" mandatory="0" type="String" size="3"/>
+				<parameter order="2" name="nextPage" mandatory="0" type="String" size="3"/>
+				<parameter order="3" name="previousPage" mandatory="0" type="String" size="3"/>
+			</dto>
+			<parameter order="2" name="page" mandatory="0" type="Long" size="3"/>
+			<parameter order="3" name="totalPages" mandatory="0" type="Long" size="3"/>
+			<parameter order="4" name="totalElements" mandatory="0" type="Long" size="3"/>
+			<parameter order="5" name="pageSize" mandatory="0" type="Long" size="3"/>
+		</dto>
+	</paramsOut>
+	<description>Transaction Filter All</description>
+</transaction>

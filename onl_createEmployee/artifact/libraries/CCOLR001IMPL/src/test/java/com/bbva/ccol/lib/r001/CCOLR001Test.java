@@ -5,7 +5,6 @@ import com.bbva.apx.exception.db.NoResultException;
 import com.bbva.apx.exception.db.TimeoutException;
 import com.bbva.ccol.dto.employee.EmployeeDTO;
 import com.bbva.elara.configuration.manager.application.ApplicationConfigurationService;
-import com.bbva.elara.domain.transaction.Advice;
 import com.bbva.elara.domain.transaction.Context;
 import com.bbva.elara.domain.transaction.ThreadContext;
 import javax.annotation.Resource;
@@ -24,7 +23,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import com.bbva.elara.utility.jdbc.JdbcUtils;
 @RunWith(SpringJUnit4ClassRunner.class)

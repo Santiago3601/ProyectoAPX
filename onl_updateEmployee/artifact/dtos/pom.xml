@@ -12,5 +12,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>DTOS-onl_updateEmployee</name>
-	<modules/>
+	<modules>
+		<module>CCOLC003</module>
+	</modules>
 </project>

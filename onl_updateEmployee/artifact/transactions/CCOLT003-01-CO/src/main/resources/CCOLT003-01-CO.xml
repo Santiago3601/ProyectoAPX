@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<transaction xmlns="http://www.w3schools.com" transactionName="CCOLT003" application="CCOL" version="01" country="CO" language="ES">
+	<paramsIn>
+		<dto order="1" name="employeeDTO" mandatory="1" package="com.bbva.ccol.dto.employee.EmployeeDTO" artifactId="CCOLC003">
+			<parameter order="1" name="employee_number" mandatory="1" type="Long" size="10"/>
+			<parameter order="2" name="employee_name" mandatory="1" type="String" size="50"/>
+			<parameter order="3" name="employee_department" mandatory="1" type="String" size="50"/>
+			<parameter order="4" name="employee_rfc" mandatory="1" type="String" size="20"/>
+			<parameter order="5" name="employee_email" mandatory="1" type="String" size="20"/>
+			<parameter order="6" name="employee_phone" mandatory="1" type="String" size="20"/>
+			<parameter order="7" name="employee_address" mandatory="1" type="String" size="20"/>
+			<parameter order="8" name="employee_registration_date" mandatory="1" type="Date (YYYY-MM-DD)" size="0"/>
+			<parameter order="9" name="employee_status" mandatory="1" type="Long" size="10"/>
+			<parameter order="10" name="salary" mandatory="1" type="Long" size="16"/>
+		</dto>
+	</paramsIn>
+	<paramsOut>
+		<parameter order="1" name="mensaje" mandatory="0" type="String" size="650"/>
+	</paramsOut>
+	<description>Update Transaction</description>
+</transaction>

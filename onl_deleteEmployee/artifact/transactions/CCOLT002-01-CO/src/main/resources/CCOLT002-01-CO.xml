@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<transaction xmlns="http://www.w3schools.com" transactionName="CCOLT002" application="CCOL" version="01" country="CO" language="ES">
+	<paramsIn>
+		<dto order="1" name="employeeDTO" mandatory="1" package="com.bbva.ccol.dto.employee.EmployeeDTO" artifactId="CCOLC002">
+			<parameter order="1" name="employee_number" mandatory="1" type="Long" size="10"/>
+		</dto>
+	</paramsIn>
+	<paramsOut>
+		<parameter order="1" name="estado" mandatory="0" type="String" size="50"/>
+	</paramsOut>
+	<description>Delete Method</description>
+</transaction>

@@ -12,5 +12,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>LIBRARIES-onl_updateEmployee</name>
-	<modules/>
+	<modules>
+		<module>CCOLR003</module>
+		<module>CCOLR003IMPL</module>
+	</modules>
 </project>

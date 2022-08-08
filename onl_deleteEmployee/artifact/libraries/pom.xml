@@ -12,5 +12,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>LIBRARIES-onl_deleteEmployee</name>
-	<modules/>
+	<modules>
+		<module>CCOLR002</module>
+		<module>CCOLR002IMPL</module>
+	</modules>
 </project>

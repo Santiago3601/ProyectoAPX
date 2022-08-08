@@ -67,7 +67,18 @@ public class CCOLT00101COTransactionTest {
     public void testNotNull() {
         // Example to Mock the Header
         // Mockito.doReturn("ES").when(header).getHeaderParameter(RequestHeaderParamsName.COUNTRYCODE);
-        EmployeeDTO employeeDTO = setParametersCorrect();
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO.setEmployee_number(1L);
+        employeeDTO.setEmployee_name("Santiago Ruiz Rincon");
+        employeeDTO.setEmployee_department("SISTEMAS");
+        employeeDTO.setEmployee_rfc("RURS010603ABC");
+        employeeDTO.setEmployee_email("1@gmail.com");
+        employeeDTO.setEmployee_phone("3192091346");
+        employeeDTO.setEmployee_address("CLL 22 M BIS # 12-45");
+        employeeDTO.setEmployee_registration_date(new Date());
+        employeeDTO.setEmployee_status(1L);
+        employeeDTO.setSalary(80000L);
+
         addParameter("employeeDTO", employeeDTO);
         Assert.assertNotNull(this.transaction);
         this.transaction.execute();
@@ -127,7 +138,7 @@ public class CCOLT00101COTransactionTest {
     private EmployeeDTO setParametersCorrect() {
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setEmployee_number(1L);
-        employeeDTO.setEmployee_name("Santiago");
+        employeeDTO.setEmployee_name("  Santiago  ");
         employeeDTO.setEmployee_department("RRHH");
         employeeDTO.setEmployee_rfc("LUMA470929F37");
         employeeDTO.setEmployee_email("ejemplo@gmail.com");
@@ -146,7 +157,7 @@ public class CCOLT00101COTransactionTest {
         employeeDTO.setEmployee_department("RRHH@");
         employeeDTO.setEmployee_rfc("LUMA470929F37@");
         employeeDTO.setEmployee_email("ejemplo@no_gmail.com");
-        employeeDTO.setEmployee_phone("571234567890");
+        employeeDTO.setEmployee_phone("57123");
         employeeDTO.setEmployee_address("calle de la amargura");
         employeeDTO.setEmployee_registration_date(new Date());
         employeeDTO.setEmployee_status(1L);

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util" xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	<bean id="CCOLT00501COTransaction" class="com.bbva.ccol.CCOLT00501COTransaction"/>
+	<bean id="configurationArchitecture" class="com.bbva.elara.test.TestConfiguration">
+		<property name="properties" ref="propertiesLoadedTest"/>
+	</bean>
+	<bean id="propertiesLoadedTest" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:/common-env.properties</value>
+				<value>classpath:/CCOL.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="dummyBundle" class="com.bbva.elara.test.osgi.DummyBundle">
+		<constructor-arg type="java.lang.String" value="CCOLT005-01-CO"/>
+	</bean>
+	<bean id="dummyTransactionFileDelegate" class="com.bbva.elara.test.osgi.DummyTransactionFileDelegate">
+		<constructor-arg type="java.util.Properties" value="#{configurationArchitecture.getProperties()}"/>
+	</bean>
+	<bean id="dummyBundleContext" class="com.bbva.elara.test.osgi.DummyBundleContext">
+		<constructor-arg type="org.osgi.framework.Bundle" ref="dummyBundle"/>
+	</bean>
+	<util:properties id="properties">
+		<!-- Example fields for database with logic name XXX -->
+		<prop key="XXX.url"/>
+		<prop key="XXX.driver"/>
+		<prop key="XXX.username"/>
+		<prop key="XXX.password"/>
+	</util:properties>
+	<bean id="ccolR005" class="org.mockito.Mockito" factory-method="mock">
+		<constructor-arg value="com.bbva.ccol.lib.r005.CCOLR005"/>
+	</bean>
+</beans>

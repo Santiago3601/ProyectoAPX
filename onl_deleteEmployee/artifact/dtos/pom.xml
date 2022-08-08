@@ -12,5 +12,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>DTOS-onl_deleteEmployee</name>
-	<modules/>
+	<modules>
+		<module>CCOLC002</module>
+	</modules>
 </project>
