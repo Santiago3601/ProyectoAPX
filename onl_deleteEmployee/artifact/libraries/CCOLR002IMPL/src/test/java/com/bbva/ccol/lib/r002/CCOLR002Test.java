@@ -7,6 +7,7 @@ import com.bbva.elara.configuration.manager.application.ApplicationConfiguration
 import com.bbva.elara.domain.transaction.Context;
 import com.bbva.elara.domain.transaction.ThreadContext;
 import javax.annotation.Resource;
+
 import com.bbva.elara.utility.jdbc.JdbcUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,6 +20,7 @@ import org.springframework.aop.framework.Advised;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,13 +69,11 @@ public class CCOLR002Test {
 
     @Test
     public void executeTestThrowNoResultException() {
-        Map<String, Object> mapa = new HashMap<>();
-        mapa.put("employee_number", 1L);
-        mapa.put("employee_status", DefVals.disableValueStatus());
-        mapa.put("employee_registration_date", DefVals.getInvocationDate());
+        Map<String, Object> mapa = setParams();
         Mockito.when(this.jdbcUtils.update("sql.update.deleteEmployee", mapa)).thenThrow(new NoResultException("..."));
+      //  Mockito.when(ccolR002.executeDeleteEmployee(1L)).thenThrow(new NoResultException("..."));
         int respuesta =   ccolR002.executeDeleteEmployee(1L);
-//        Assert.assertEquals(-1,respuesta);
+       // Assert.assertEquals(-1,respuesta);
         Assert.assertNotNull(context.getAdviceList());
     }
 
@@ -81,22 +81,18 @@ public class CCOLR002Test {
 
     @Test
     public void executeTestCreateExBusiness(){
-        Map<String, Object> mapa = new HashMap<>();
-        mapa.put("employee_number", 1L);
-        mapa.put("employee_status", DefVals.disableValueStatus());
-        mapa.put("employee_registration_date", DefVals.getInvocationDate());
+        Map<String, Object> mapa = setParams();
         Mockito.when(this.jdbcUtils.update("sql.update.deleteEmployee", mapa)).thenThrow(new BusinessException("...", false));
+      //  Mockito.when( ccolR002.executeDeleteEmployee(1L)).thenThrow(new BusinessException("...", false));
+       // Mockito.when( ccolR002.executeDeleteEmployee(1L)).thenThrow(new BusinessException("...", false));
         int respuesta = ccolR002.executeDeleteEmployee(1L);
-//        Assert.assertEquals(-2, respuesta );
+      //  Assert.assertEquals(-2, respuesta );
         Assert.assertNotNull(context.getAdviceList());
     }
 
     @Test
     public void executeTestCreateExTimeoutException(){
-        Map<String, Object> mapa = new HashMap<>();
-        mapa.put("employee_number", 1L);
-        mapa.put("employee_status", DefVals.disableValueStatus());
-        mapa.put("employee_registration_date", DefVals.getInvocationDate());
+        Map<String, Object> mapa = setParams();
         Mockito.when(this.jdbcUtils.update("sql.update.deleteEmployee", mapa)).thenThrow(new TimeoutException("..."));
         int respuesta = ccolR002.executeDeleteEmployee(1L);
 //        Assert.assertEquals(-3,respuesta);
@@ -104,6 +100,13 @@ public class CCOLR002Test {
         Assert.assertNotNull(context.getAdviceList());
     }
 
+    public   Map<String, Object>  setParams(){
+        Map<String, Object> mapa = new HashMap<>();
+        mapa.put("employee_number", 1L);
+        mapa.put("employee_status", DefVals.disableValueStatus());
+        mapa.put("employee_registration_date", DefVals.getInvocationDate());
+        return mapa;
+    }
 
 /*
     @Test

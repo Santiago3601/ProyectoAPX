@@ -137,7 +137,6 @@ public class CCOLT00101COTransactionTest {
     //Métodos de seteo de parametros para los casos de prueba
     private EmployeeDTO setParametersCorrect() {
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setEmployee_number(1L);
         employeeDTO.setEmployee_name("  Santiago  ");
         employeeDTO.setEmployee_department("RRHH");
         employeeDTO.setEmployee_rfc("LUMA470929F37");
@@ -152,7 +151,6 @@ public class CCOLT00101COTransactionTest {
 
     private EmployeeDTO setParametersFailSpecialCharacter() {
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setEmployee_number(1L);
         employeeDTO.setEmployee_name("Santiago@");
         employeeDTO.setEmployee_department("RRHH@");
         employeeDTO.setEmployee_rfc("LUMA470929F37@");
@@ -167,7 +165,6 @@ public class CCOLT00101COTransactionTest {
 
     private EmployeeDTO setParametersFailMailStructure() {
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setEmployee_number(1L);
         employeeDTO.setEmployee_name("Santiago@");
         employeeDTO.setEmployee_department("RRHH@");
         employeeDTO.setEmployee_rfc("0UMA470929F37");
@@ -182,7 +179,6 @@ public class CCOLT00101COTransactionTest {
 
     private EmployeeDTO setParametersFailRFCEmp() {
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setEmployee_number(1L);
         employeeDTO.setEmployee_name("Santiago@");
         employeeDTO.setEmployee_department("RRHH@");
         employeeDTO.setEmployee_rfc("AUMA470G29F37");
@@ -197,7 +193,6 @@ public class CCOLT00101COTransactionTest {
 
     private EmployeeDTO setParametersFailRFCPer_1() {
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setEmployee_number(1L);
         employeeDTO.setEmployee_name("Santiago@");
         employeeDTO.setEmployee_department("RRHH@");
         employeeDTO.setEmployee_rfc("0UM470029F37");
@@ -212,7 +207,6 @@ public class CCOLT00101COTransactionTest {
 
     private EmployeeDTO setParametersFailRFCPer_2() {
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setEmployee_number(1L);
         employeeDTO.setEmployee_name("Santiago@");
         employeeDTO.setEmployee_department("RRHH@");
         employeeDTO.setEmployee_rfc("AUM470L29F37");
@@ -227,7 +221,6 @@ public class CCOLT00101COTransactionTest {
 
     private EmployeeDTO setParametersTestIfRFCPer_() {
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setEmployee_number(1L);
         employeeDTO.setEmployee_name("Santiago@");
         employeeDTO.setEmployee_department("RRHH@");
         employeeDTO.setEmployee_rfc("AUM470L29F37");

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans" xmlns="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd">
+  <job id="CCOLJ006-01-CO" incrementer="defaultIncrementer" job-repository="jobRepository">
+  	<description>Job</description>
+    <listeners>
+      <listener ref="interceptorJobExecutionListener"/>
+    </listeners>
+    <step id="ref_stepEmployees" parent="stepEmployees"/>
+  </job>
+  <step id="stepEmployees">
+    <tasklet>
+      <chunk reader="reader" processor="" writer="writer" commit-interval="1"/>
+      <listeners>
+        <listener ref="interceptorJobExecutionListener"/>
+      </listeners>
+    </tasklet>
+  </step>
+</beans:beans>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:osgi="http://www.springframework.org/schema/osgi" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<import resource="classpath:/spring/elara-aspect.xml"/>
+	<bean id="ccolR006Abstract" abstract="true" class="com.bbva.ccol.lib.r006.impl.CCOLR006Abstract">
+		<property name="applicationConfigurationService" ref="applicationConfigurationService"/>
+		<property name="jdbcUtils" ref="jdbcUtils"/>
+	</bean>
+	<bean id="applicationConfigurationService" factory-bean="applicationConfigurationServiceFactory" factory-method="getApplicationConfigurationService">
+		<constructor-arg type="org.osgi.framework.BundleContext" ref="bundleContext"/>
+	</bean>
+	<bean id="jdbcUtils" factory-bean="jdbcUtilsFactory" factory-method="getJdbcUtils">
+		<constructor-arg type="org.osgi.framework.BundleContext" ref="bundleContext"/>
+	</bean>
+</beans>

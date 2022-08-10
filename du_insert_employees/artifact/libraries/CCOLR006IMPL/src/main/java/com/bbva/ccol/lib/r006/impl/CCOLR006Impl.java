@@ -1,4 +1,4 @@
-package com.bbva.ccol.lib.r001.impl;
+package com.bbva.ccol.lib.r006.impl;
 
 import com.bbva.apx.exception.business.BusinessException;
 import com.bbva.apx.exception.db.NoResultException;
@@ -11,15 +11,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The CCOLR001Impl class...
+ * The CCOLR006Impl class...
  */
-public class CCOLR001Impl extends CCOLR001Abstract {
+public class CCOLR006Impl extends CCOLR006Abstract {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CCOLR001Impl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CCOLR006Impl.class);
 
-	/**
-	 * The execute method...
-	 */
 	@Override
 	public int executeCreateEmployee(EmployeeDTO employeeDTO) {
 		Map<String, Object> mapa = new HashMap<>();
@@ -34,7 +31,8 @@ public class CCOLR001Impl extends CCOLR001Abstract {
 		mapa.put("salary",employeeDTO.getSalary());
 		int dato;
 		try {
-			dato = this.jdbcUtils.update("sql.insert.createEmployee", mapa);
+			LOGGER.info("MAP {}", mapa.toString());
+			dato = this.jdbcUtils.update("sql.insert.crearemployee", mapa);
 		}catch (NoResultException e){
 			dato = -1;
 			this.addAdviceWithDescription("CCOL00000001","error en conexión");
@@ -50,7 +48,10 @@ public class CCOLR001Impl extends CCOLR001Abstract {
 		}
 		LOGGER.info("response: {}", dato);
 		return dato;
-
 	}
+
+	/**
+	 * The execute method...
+	 */
 
 }

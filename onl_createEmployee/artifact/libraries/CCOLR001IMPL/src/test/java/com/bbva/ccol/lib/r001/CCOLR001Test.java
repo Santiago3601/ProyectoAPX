@@ -1,21 +1,24 @@
 package com.bbva.ccol.lib.r001;
-
 import com.bbva.apx.exception.business.BusinessException;
 import com.bbva.apx.exception.db.NoResultException;
 import com.bbva.apx.exception.db.TimeoutException;
 import com.bbva.ccol.dto.employee.EmployeeDTO;
 import com.bbva.elara.configuration.manager.application.ApplicationConfigurationService;
+import com.bbva.elara.domain.transaction.Advice;
 import com.bbva.elara.domain.transaction.Context;
 import com.bbva.elara.domain.transaction.ThreadContext;
 import javax.annotation.Resource;
+
+import com.bbva.elara.utility.jdbc.JdbcUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.Advised;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,7 +27,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import com.bbva.elara.utility.jdbc.JdbcUtils;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 		"classpath:/META-INF/spring/CCOLR001-app.xml",
@@ -72,7 +74,8 @@ public class CCOLR001Test {
 
 		EmployeeDTO employeeDTO = setParameters();
 		Map<String, Object> mapa = setMapa(employeeDTO);
-		Mockito.when(this.jdbcUtils.update("sql.insert.createEmployee", mapa)).thenThrow(new NoResultException("..."));
+		//Mockito.when(this.jdbcUtils.update("sql.insert.createEmployee", mapa)).thenThrow(new NoResultException("..."));
+		Mockito.when(ccolR001.executeCreateEmployee(employeeDTO)).thenThrow(new NoResultException("..."));
 		int valor = ccolR001.executeCreateEmployee(employeeDTO);
 		Assert.assertEquals(-1, valor );
 		Assert.assertNotNull(context.getAdviceList());
@@ -83,7 +86,8 @@ public class CCOLR001Test {
 	public void executeTestCreateExBusiness(){
 		EmployeeDTO employeeDTO = setParameters();
 		Map<String, Object> mapa = setMapa(employeeDTO);
-		Mockito.when(this.jdbcUtils.update("sql.insert.createEmployee", mapa)).thenThrow(new BusinessException("...", false));
+		//Mockito.when(this.jdbcUtils.update("sql.insert.createEmployee", mapa)).thenThrow(new BusinessException("...", false));
+		Mockito.when(ccolR001.executeCreateEmployee(employeeDTO)).thenThrow(new BusinessException("...", false));
 		int valor = ccolR001.executeCreateEmployee(employeeDTO);
 		Assert.assertEquals(-2, valor );
 		Assert.assertNotNull(context.getAdviceList());
@@ -93,7 +97,9 @@ public class CCOLR001Test {
 	public void executeTestCreateExTiemOut(){
 		EmployeeDTO employeeDTO = setParameters();
 		Map<String, Object> mapa = setMapa(employeeDTO);
-		Mockito.when(this.jdbcUtils.update("sql.insert.createEmployee", mapa)).thenThrow(new TimeoutException("..."));
+	//	Mockito.when(this.jdbcUtils.update("sql.insert.createEmployee", mapa)).thenThrow(new TimeoutException("..."));
+		Mockito.when(ccolR001.executeCreateEmployee(employeeDTO)).thenThrow(new TimeoutException("..."));
+
 		int valor = ccolR001.executeCreateEmployee(employeeDTO);
 		Assert.assertEquals(-3, valor );
 		Assert.assertNotNull(context.getAdviceList());
@@ -116,7 +122,7 @@ public class CCOLR001Test {
 	}
 	private EmployeeDTO setParameters() {
 		EmployeeDTO employeeDTO = new EmployeeDTO();
-		employeeDTO.setEmployee_number(1L);
+//		employeeDTO.setEmployee_number(1L);
 		employeeDTO.setEmployee_name("Santiago");
 		employeeDTO.setEmployee_department("RRHH");
 		employeeDTO.setEmployee_rfc("LUMA470929F37");
