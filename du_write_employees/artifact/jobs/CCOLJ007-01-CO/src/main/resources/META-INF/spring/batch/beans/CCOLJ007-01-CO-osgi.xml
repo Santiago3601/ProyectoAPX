@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:osgi="http://www.springframework.org/schema/osgi" xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/osgi 
+						http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<osgi:reference id="batchLauncher" interface="com.bbva.elara.batch.launcher.BatchLauncher" filter="(TransactionBatchName=CCOLJ007-01-CO)"/>
+	<!-- Configuration Service -->
+	<osgi:reference id="applicationConfigurationServiceFactory" bean-name="applicationConfigurationServiceFactory" interface="com.bbva.elara.configuration.manager.application.factory.ApplicationConfigurationServiceFactory"/>
+	<osgi:reference id="jobRepository" interface="org.springframework.batch.core.repository.JobRepository"/>
+	<osgi:reference id="defaultIncrementer" interface="org.springframework.batch.core.JobParametersIncrementer"/>
+	<osgi:reference id="interceptorJobExecutionListener" interface="org.springframework.batch.core.JobExecutionListener"/>
+	<osgi:reference id="interceptorStepExecutionListener" interface="org.springframework.batch.core.SkipListener"/>
+	<osgi:reference id="logPlannerInterceptorStepExecutionListener" interface="org.springframework.batch.core.StepExecutionListener"/>
+	<osgi:reference id="ccolR007" bean-name="ccolR007" interface="com.bbva.ccol.lib.r007.CCOLR007"/>
+</beans>

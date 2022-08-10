@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+	<!-- CCOLJ007-01-CO-beans.xml -->
+	
+	<!-- Set to the required transaction manager -->
+	<bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+
+	<bean class="org.springframework.batch.core.scope.StepScope" />
+	
+	<bean id="jobLauncher"  class="com.bbva.elara.batch.launcher.SimpleJobLauncherBean">
+		<property name="job" ref="CCOLJ007-01-CO" />
+		<property name="batchLauncher" ref="batchLauncher" />
+		<property name="defaultIncrementer" ref="defaultIncrementer" />		
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="deleteOldData" class="com.bbva.ccol.batch.DeleteOldData" scope="step">
+		<property name="ccolR007" ref="ccolR007"/>
+	</bean>
+
+	<bean id="readerCreate" class="com.bbva.ccol.batch.ReaderCreate" scope="step">
+		<property name="ccolR007" ref="ccolR007"/>
+		<property name="departament" value="#{jobParameters['departamentRead]}"/>
+	</bean>
+
+	<bean id="writerCreate" class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
+		<property name="resource" value="file:/fichtemcomp/datsal/CCOL_D02_#{jobParameters['oDate']}_cus.csv"/>
+		<property name="lineAggregator">
+			<bean class="org.springframework.batch.item.file.transform.PassThroughLineAggregator"/>
+		</property>
+	</bean>
+
+</beans>
