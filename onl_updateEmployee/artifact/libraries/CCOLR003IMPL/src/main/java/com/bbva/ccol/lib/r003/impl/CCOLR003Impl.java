@@ -7,6 +7,8 @@ import com.bbva.ccol.dto.employee.EmployeeDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +34,12 @@ public class CCOLR003Impl extends CCOLR003Abstract {
 		mapa.put("employee_email",employeeDTO.getEmployee_email());
 		mapa.put("employee_phone",employeeDTO.getEmployee_phone());
 		mapa.put("employee_address",employeeDTO.getEmployee_address());
-		mapa.put("employee_registration_date",employeeDTO.getEmployee_registration_date());
+
+		Date date = employeeDTO.getEmployee_registration_date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		String fechaFormateada = sdf.format(date);
+
+		mapa.put("employee_registration_date",fechaFormateada);
 		mapa.put("employee_status",employeeDTO.getEmployee_status());
 		mapa.put("salary",employeeDTO.getSalary());
 		int dato;

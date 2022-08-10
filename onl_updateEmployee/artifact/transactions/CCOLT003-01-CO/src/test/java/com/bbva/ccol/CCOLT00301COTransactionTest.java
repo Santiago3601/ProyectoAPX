@@ -73,7 +73,7 @@ public class CCOLT00301COTransactionTest {
 		employeeDTO.setEmployee_email("1@gmail.com");
 		employeeDTO.setEmployee_phone("3192091346");
 		employeeDTO.setEmployee_address("CLL 22 M BIS # 12-45");
-		employeeDTO.setEmployee_registration_date("2022-01-02");
+		employeeDTO.setEmployee_registration_date(new Date(System.currentTimeMillis()));
 		employeeDTO.setEmployee_status(1L);
 		employeeDTO.setSalary(80000L);
 
@@ -142,7 +142,7 @@ public class CCOLT00301COTransactionTest {
 		employeeDTO.setEmployee_email("ejemplo@gmail.com");
 		employeeDTO.setEmployee_phone("571234567890");
 		employeeDTO.setEmployee_address("calle de la amargura");
-		employeeDTO.setEmployee_registration_date("2022-01-02");
+		employeeDTO.setEmployee_registration_date(new Date(System.currentTimeMillis()));
 		employeeDTO.setEmployee_status(1L);
 		employeeDTO.setSalary(80000L);
 		return employeeDTO;
@@ -157,7 +157,7 @@ public class CCOLT00301COTransactionTest {
 		employeeDTO.setEmployee_email("ejemplo@no_gmail.com");
 		employeeDTO.setEmployee_phone("57123");
 		employeeDTO.setEmployee_address("calle de la amargura");
-		employeeDTO.setEmployee_registration_date("2022-01-02");
+		employeeDTO.setEmployee_registration_date(new Date(System.currentTimeMillis()));
 		employeeDTO.setEmployee_status(1L);
 		employeeDTO.setSalary(80000L);
 		return employeeDTO;
@@ -172,7 +172,7 @@ public class CCOLT00301COTransactionTest {
 		employeeDTO.setEmployee_email("@gmail.com");
 		employeeDTO.setEmployee_phone("571234567890");
 		employeeDTO.setEmployee_address("calle de la amargura");
-		employeeDTO.setEmployee_registration_date("2022-01-02");
+		employeeDTO.setEmployee_registration_date(new Date(System.currentTimeMillis()));
 		employeeDTO.setEmployee_status(1L);
 		employeeDTO.setSalary(80000L);
 		return employeeDTO;
@@ -187,7 +187,7 @@ public class CCOLT00301COTransactionTest {
 		employeeDTO.setEmployee_email("@gmail.com");
 		employeeDTO.setEmployee_phone("571234567890");
 		employeeDTO.setEmployee_address("calle de la amargura");
-		employeeDTO.setEmployee_registration_date("2022-01-02");
+		employeeDTO.setEmployee_registration_date(new Date(System.currentTimeMillis()));
 		employeeDTO.setEmployee_status(1L);
 		employeeDTO.setSalary(80000L);
 		return employeeDTO;
@@ -202,7 +202,7 @@ public class CCOLT00301COTransactionTest {
 		employeeDTO.setEmployee_email("@gmail.com");
 		employeeDTO.setEmployee_phone("571234567890");
 		employeeDTO.setEmployee_address("calle de la amargura");
-		employeeDTO.setEmployee_registration_date("2022-01-02");
+		employeeDTO.setEmployee_registration_date(new Date(System.currentTimeMillis()));
 		employeeDTO.setEmployee_status(1L);
 		employeeDTO.setSalary(80000L);
 		return employeeDTO;
@@ -217,7 +217,7 @@ public class CCOLT00301COTransactionTest {
 		employeeDTO.setEmployee_email("@gmail.com");
 		employeeDTO.setEmployee_phone("571234567890");
 		employeeDTO.setEmployee_address("calle de la amargura");
-		employeeDTO.setEmployee_registration_date("2022-01-02");
+		employeeDTO.setEmployee_registration_date(new Date(System.currentTimeMillis()));
 		employeeDTO.setEmployee_status(1L);
 		employeeDTO.setSalary(80000L);
 		return employeeDTO;
@@ -232,7 +232,7 @@ public class CCOLT00301COTransactionTest {
 		employeeDTO.setEmployee_email("@gmail.com");
 		employeeDTO.setEmployee_phone("571234567890");
 		employeeDTO.setEmployee_address("calle de la amargura");
-		employeeDTO.setEmployee_registration_date("2022-01-02");
+		employeeDTO.setEmployee_registration_date(new Date(System.currentTimeMillis()));
 		employeeDTO.setEmployee_status(1L);
 		employeeDTO.setSalary(80000L);
 		return employeeDTO;

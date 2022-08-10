@@ -67,15 +67,13 @@ public class CCOLR003Test {
 	@Test
 	public void executeTest(){
 		ccolR003.executeUpdateEmployee(setParameters());
-		Assert.assertEquals(0, context.getAdviceList().size());
+		Assert.assertNotNull(context.getAdviceList());
 	}
 
 	@Test
 	public void executeTestCreateExNoResult(){
-
 		EmployeeDTO employeeDTO = setParameters();
-		Map<String, Object> mapa = setMapa(employeeDTO);
-		Mockito.when(this.jdbcUtils.update("sql.update.updateEmployee", mapa)).thenThrow(new NoResultException("..."));
+		Mockito.when(ccolR003.executeUpdateEmployee(employeeDTO)).thenThrow(new NoResultException("..."));
 		int valor = ccolR003.executeUpdateEmployee(employeeDTO);
 		Assert.assertEquals(-1, valor );
 		Assert.assertNotNull(context.getAdviceList());
@@ -86,7 +84,7 @@ public class CCOLR003Test {
 	public void executeTestCreateExBusiness(){
 		EmployeeDTO employeeDTO = setParameters();
 		Map<String, Object> mapa = setMapa(employeeDTO);
-		Mockito.when(this.jdbcUtils.update("sql.update.updateEmployee", mapa)).thenThrow(new BusinessException("...", false));
+		Mockito.when(ccolR003.executeUpdateEmployee(employeeDTO)).thenThrow(new BusinessException("...", false));
 		int valor = ccolR003.executeUpdateEmployee(employeeDTO);
 		Assert.assertEquals(-2, valor );
 		Assert.assertNotNull(context.getAdviceList());
@@ -96,7 +94,7 @@ public class CCOLR003Test {
 	public void executeTestCreateExTiemOut(){
 		EmployeeDTO employeeDTO = setParameters();
 		Map<String, Object> mapa = setMapa(employeeDTO);
-		Mockito.when(this.jdbcUtils.update("sql.update.updateEmployee", mapa)).thenThrow(new TimeoutException("..."));
+		Mockito.when(ccolR003.executeUpdateEmployee(employeeDTO)).thenThrow(new TimeoutException("..."));
 		int valor = ccolR003.executeUpdateEmployee(employeeDTO);
 		Assert.assertEquals(-3, valor );
 		Assert.assertNotNull(context.getAdviceList());
@@ -126,7 +124,7 @@ public class CCOLR003Test {
 		employeeDTO.setEmployee_email("ejemplo@gmail.com");
 		employeeDTO.setEmployee_phone("571234567890");
 		employeeDTO.setEmployee_address("calle de la amargura");
-		employeeDTO.setEmployee_registration_date("2022-02-01");
+		employeeDTO.setEmployee_registration_date(new Date(System.currentTimeMillis()));
 		employeeDTO.setEmployee_status(1L);
 		employeeDTO.setSalary(80000L);
 		return employeeDTO;

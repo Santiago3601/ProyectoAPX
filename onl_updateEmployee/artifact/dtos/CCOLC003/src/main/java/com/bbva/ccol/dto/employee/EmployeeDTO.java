@@ -23,7 +23,7 @@ public class EmployeeDTO implements Serializable  {
 	private String employee_email;
 	private String employee_phone;
 	private String employee_address;
-	private String employee_registration_date;
+	private Date employee_registration_date;
 	private Long employee_status;
 	private Long salary;
 	/**
@@ -85,11 +85,11 @@ public class EmployeeDTO implements Serializable  {
 		this.employee_address = employee_address;
 	}
 
-	public String getEmployee_registration_date() {
+	public Date getEmployee_registration_date() {
 		return employee_registration_date;
 	}
 
-	public void setEmployee_registration_date(String employee_registration_date) {
+	public void setEmployee_registration_date(Date employee_registration_date) {
 		this.employee_registration_date = employee_registration_date;
 	}
 
