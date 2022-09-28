@@ -1,11 +1,7 @@
 package com.bbva.ccol.batch;
 
-
-
 import com.bbva.ccol.dto.employee.EmployeeDTO;
-import com.bbva.ccol.dto.employee.pagination.PaginationIn;
 import com.bbva.ccol.lib.r007.CCOLR007;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemReader;
@@ -14,19 +10,14 @@ import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 
 import java.util.ArrayList;
-
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ReaderCreate implements ItemReader<Object> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReaderCreate.class);
+
     private CCOLR007 ccolR007;
-    private Integer pageKey = 1;
-    private Integer pageSize = 5;
-
-    private String department;
-
 
     public CCOLR007 getCcolR007() {
         return ccolR007;
@@ -36,6 +27,13 @@ public class ReaderCreate implements ItemReader<Object> {
         this.ccolR007 = ccolR007;
     }
 
+    private Integer pageKey = 1;
+    private Integer pageSize = 5;
+
+    private Integer cont = 0;
+
+    private String department;
+
     public String getDepartment() {
         return department;
     }
@@ -44,57 +42,58 @@ public class ReaderCreate implements ItemReader<Object> {
         this.department = department;
     }
 
-    @Override
-    public Object read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-        PaginationIn paginationIn = new PaginationIn();
-        paginationIn.setPaginationKey(pageKey.toString());
-        paginationIn.setPageSize(Long.parseLong(pageSize.toString()));
+    private String oDate;
 
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setEmployee_department(department);
-
-        LOGGER.info("Paginacion {}", pageKey);
-
-        if (pageKey >= 0) {
-            List<Map<String, Object>> response = ccolR007.executeListEmployee(paginationIn, employeeDTO);
-
-            if ( response.isEmpty() ) {
-                pageKey = 0;
-                LOGGER.info("Fin de ejecucion de JOB ");
-            } else {
-                pageKey += pageSize;
-                List<String> listEmployee = recoridoMapas(response);
-
-                return listEmployee;
-            }
-
-
-        } else {
-            LOGGER.info("No existe informacion ");
-        }
-
-        return null;
+    public String getoDate() {
+        return oDate;
     }
 
-    public List<String> recoridoMapas(List<Map<String, Object>> map) {
-        List<String> listEmployee = new ArrayList<>();
+    public void setoDate(String oDate) {
+        this.oDate = oDate;
+    }
 
-        for (Map<String, Object> dto: map) {
+    @Override
+    public Object read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
 
-            listEmployee.add(dto.get("employee_number").toString());
-            listEmployee.add(dto.get("employee_name").toString());
-            listEmployee.add(dto.get("employee_department").toString());
-            listEmployee.add(dto.get("employee_rfc").toString());
-            listEmployee.add(dto.get("employee_email").toString());
-            listEmployee.add(dto.get("employee_phone").toString());
-            listEmployee.add(dto.get("employee_address").toString());
-            listEmployee.add(dto.get("employee_registration_date").toString());
-            listEmployee.add(dto.get("employee_status").toString());
-            listEmployee.add(dto.get("salary").toString() + "\n");
-
+        List<EmployeeDTO> response = ccolR007.executeListCustomer();
+        String listaDep = ccolR007.executeDistinctDepartment();
+        String[] list = listaDep.split(",");
+        StringBuilder lista = new StringBuilder();
+        boolean entro = false;
+        for (int i = 0; i < list.length; i++) {
+            if (i == cont && !entro) {
+                String d = list[cont].replace("'", "");
+                lista = recorridoMapa(response.stream().filter(e -> d.equalsIgnoreCase(e.getEmployee_department())).collect(Collectors.toList()));
+                entro = true;
+                cont++;
+            }
         }
+        LOGGER.info("CONTADOR : {}", cont);
+        LOGGER.info("LISTA LENGTH : {}", list.length);
+        if (!entro) {
+            LOGGER.info("SALIDA READ");
+            return null;
+        }
+        List<StringBuilder> listaGeneral = new ArrayList<>();
+        listaGeneral.add(lista);
+        LOGGER.info("LISTA GENERAL : {}", listaGeneral.toString());
+        return listaGeneral;
+    }
 
-        return listEmployee;
+    public StringBuilder recorridoMapa(List<EmployeeDTO> lista) {
+        StringBuilder listaBuilder = new StringBuilder();
+        for (EmployeeDTO mapa : lista) {
+            listaBuilder.append(mapa.getEmployee_name() + ",");
+            listaBuilder.append(mapa.getEmployee_department() + ",");
+            listaBuilder.append(mapa.getEmployee_rfc() + ",");
+            listaBuilder.append(mapa.getEmployee_email() + ",");
+            listaBuilder.append(mapa.getEmployee_phone() + ",");
+            listaBuilder.append(mapa.getEmployee_address() + ",");
+            listaBuilder.append(mapa.getEmployee_registration_date() + ",");
+            listaBuilder.append(mapa.getEmployee_status() + ",");
+            listaBuilder.append(mapa.getSalary() + "\n");
+        }
+        return listaBuilder;
     }
 
 }

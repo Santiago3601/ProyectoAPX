@@ -5,6 +5,7 @@ import com.bbva.apx.exception.db.NoResultException;
 import com.bbva.apx.exception.db.TimeoutException;
 import com.bbva.ccol.dto.employee.EmployeeDTO;
 import com.bbva.ccol.dto.employee.pagination.PaginationIn;
+import com.bbva.ccol.lib.r007.impl.utils.BaseParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,162 +18,191 @@ import java.util.*;
  */
 public class CCOLR007Impl extends CCOLR007Abstract {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CCOLR007Impl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CCOLR007Impl.class);
 
-	/**
-	 * The execute method...
-	 */
-
-	@Override
-	public int executeCreateEmployee(EmployeeDTO employeeDTO) {
-		Map<String, Object> mapa = new HashMap<>();
-		mapa.put("employee_number",employeeDTO.getEmployee_number());
-		mapa.put("employee_name",employeeDTO.getEmployee_name());
-		mapa.put("employee_department",employeeDTO.getEmployee_department());
-		mapa.put("employee_rfc",employeeDTO.getEmployee_rfc());
-		mapa.put("employee_email",employeeDTO.getEmployee_email());
-		mapa.put("employee_phone",employeeDTO.getEmployee_phone());
-		mapa.put("employee_address",employeeDTO.getEmployee_address());
-		mapa.put("employee_registration_date",employeeDTO.getEmployee_registration_date());
-		mapa.put("employee_status",employeeDTO.getEmployee_status());
-		mapa.put("salary",employeeDTO.getSalary());
-		int dato;
-		try {
-			dato = this.jdbcUtils.update("sql.insert.crearcliente", mapa);
-		}catch (NoResultException e){
-			dato = -1;
-			this.addAdviceWithDescription("CCOL00000001","error en conexión");
-			LOGGER.info(e.getMessage());
-		}catch (BusinessException b){
-			dato = -2;
-			this.addAdviceWithDescription("CCOL00000002","error de negocio");
-			LOGGER.info(b.getMessage());
-		}catch (TimeoutException t){
-			dato = -3;
-			this.addAdviceWithDescription("CCOL00000003","error time out");
-			LOGGER.info(t.getMessage());
-		}
-		LOGGER.info("response: {}", dato);
-		return dato;
-	}
-
-	@Override
-	public int executeUpdateEmployee(EmployeeDTO employeeDTO) {
-		LOGGER.info("customerDto Impl: {}", employeeDTO.toString());
-		Map<String, Object> mapa = new HashMap<>();
-		mapa.put("employee_number",employeeDTO.getEmployee_number());
-		mapa.put("employee_name",employeeDTO.getEmployee_name());
-		mapa.put("employee_department",employeeDTO.getEmployee_department());
-		mapa.put("employee_rfc",employeeDTO.getEmployee_rfc());
-		mapa.put("employee_email",employeeDTO.getEmployee_email());
-		mapa.put("employee_phone",employeeDTO.getEmployee_phone());
-		mapa.put("employee_address",employeeDTO.getEmployee_address());
-		mapa.put("employee_registration_date",employeeDTO.getEmployee_registration_date());
-		mapa.put("employee_status",employeeDTO.getEmployee_status());
-		mapa.put("salary",employeeDTO.getSalary());
-		int dato;
-		try {
-			dato = this.jdbcUtils.update("sql.update.actualizacliente", mapa);
-		}catch (NoResultException e){
-			dato = -1;
-			this.addAdviceWithDescription("CCOL00000001","error en conexión");
-			LOGGER.info(e.getMessage());
-		}catch (BusinessException b){
-			dato = -2;
-			this.addAdviceWithDescription("CCOL00000002","error de negocio");
-			LOGGER.info(b.getMessage());
-		}catch (TimeoutException t){
-			dato = -3;
-			this.addAdviceWithDescription("CCOL00000003","error time out");
-			LOGGER.info(t.getMessage());
-		}
-		LOGGER.info("response Impl: {}", dato);
-		return dato;
-	}
-
-	@Override
-	public String executeDeleteEmployee(EmployeeDTO employeeDTO) {
-		Map<String, Object> mapa = new HashMap<>();
-		mapa.put("customerId",employeeDTO.getEmployee_number());
-		int dato;
-		try {
-			dato = this.jdbcUtils.update("sql.delete.deleteOldData ", mapa);
-		}catch (NoResultException e){
-			dato = -1;
-			this.addAdviceWithDescription("CCOL00000001","error en conexión");
-			LOGGER.info(e.getMessage());
-		}catch (BusinessException b){
-			dato = -2;
-			this.addAdviceWithDescription("CCOL00000002","error de negocio");
-			LOGGER.info(b.getMessage());
-		}catch (TimeoutException t){
-			dato = -3;
-			this.addAdviceWithDescription("CCOL00000003","error time out");
-			LOGGER.info(t.getMessage());
-		}
-		LOGGER.info("response Impl: {}", dato);
-		return String.valueOf(dato);
-	}
-
-	@Override
-	public EmployeeDTO executeGetEmployeeById(Long employeeId) {
-		return null;
-	}
-
-	@Override
-	public List<Map<String, Object>> executeListEmployee(PaginationIn paginationIn, EmployeeDTO employeeDTO2) {
-		List<Map<String, Object>> dato = null;
-		Map<String, Object> manejoErrores = new HashMap<>();
-
-		try {
-			manejoErrores.put("city", employeeDTO2.getEmployee_department());
-			dato = this.jdbcUtils.pagingQueryForList("sql.find.listarclientes", Integer.parseInt( paginationIn.getPaginationKey()),  Integer.parseInt(paginationIn.getPageSize().toString()));
-		}catch (NoResultException e){
-			manejoErrores.put("NoResultException", -1);
-			dato.add(manejoErrores);
-			this.addAdviceWithDescription("CCOL00000001","error en conexión");
-			LOGGER.info(e.getMessage());
-		}catch (BusinessException b){
-			manejoErrores.put("BusinessException", -2);
-			dato.add(manejoErrores);
-			this.addAdviceWithDescription("CCOL00000002","error de negocio");
-			LOGGER.info(b.getMessage());
-		}catch (TimeoutException t){
-			manejoErrores.put("TimeoutException", -3);
-			dato.add(manejoErrores);
-			this.addAdviceWithDescription("CCOL00000003","error time out");
-			LOGGER.info(t.getMessage());
-		}
-		LOGGER.info("response Impl: {}", dato);
+    /**
+     * The execute method...
+     */
 
 
-		return dato;
-	}
+    @Override
+    public List<EmployeeDTO> executeListCustomer() {
+        List<Map<String, Object>> dato = null;
+        Map<String, Object> manejoErrores = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
+        data.put("estatus", 1);
+//		data.put("department", listaDep);
+        LOGGER.info("MAPA SQL : {}", data.toString());
+        try {
+            dato = this.jdbcUtils.queryForList("sql.find.listaremployees",data);
+        }catch (NoResultException e){
+            manejoErrores.put("NoResultException", -1);
+            dato.add(manejoErrores);
+            this.addAdviceWithDescription(BaseParameters.ERROR_ADVICE_CONEXION.getValues(),"error en conexión");
+            LOGGER.info(e.getMessage());
+        }catch (BusinessException b){
+            manejoErrores.put("BusinessException", -2);
+            dato.add(manejoErrores);
+            this.addAdviceWithDescription(BaseParameters.ERROR_ADVICE_BUSINESS.getValues(), "error de negocio");
+            LOGGER.info(b.getMessage());
+        }catch (TimeoutException t){
+            manejoErrores.put("TimeoutException", -3);
+            dato.add(manejoErrores);
+            this.addAdviceWithDescription(BaseParameters.ERROR_ADVICE_TIME.getValues(), "error time out");
+            LOGGER.info(t.getMessage());
+        }
+        List<EmployeeDTO> lista = new ArrayList<>();
+//		Si se encontro informaciòn y la lista de errores es 0
+        if(dato != null && manejoErrores.size()==0){
+            for (Map<String, Object> registro : dato) {
+//				LOGGER.info("DATO : {}", registro.toString());
+                EmployeeDTO employeeDto = new EmployeeDTO();
+//				employeeDto.setNumber(Long.parseLong(registro.get("employee_number").toString()));
+                employeeDto.setEmployee_name(registro.get("employee_name").toString());
+                employeeDto.setEmployee_department(registro.get("employee_department").toString());
+                employeeDto.setEmployee_rfc(registro.get("employee_rfc").toString());
+                employeeDto.setEmployee_email(registro.get("employee_email").toString());
+                employeeDto.setEmployee_phone(registro.get("employee_phone").toString());
+                employeeDto.setEmployee_address(registro.get("employee_address").toString());
+                employeeDto.setSalary(Long.parseLong(registro.get("salary").toString()));
+                employeeDto.setEmployee_status(Long.parseLong(registro.get("employee_status").toString()));
+                String fecha = registro.get("employee_registration_date").toString();
+                SimpleDateFormat d = new SimpleDateFormat("dd-MM-yy");
+                Date date = new Date();
+                try {
+//					LOGGER.info("ENTRO FECHA");
+                    date = d.parse(fecha);
+                }catch (ParseException p){
+                    LOGGER.info("EXCEPCION FECHA");
+                    this.addAdviceWithDescription("CAPX00000005", "error en formato fecha");
+                }
+                employeeDto.setEmployee_registration_date(date);
+//				LOGGER.info("EMPLOYEEDTO : {}", employeeDTO);
+                lista.add(employeeDto);
+            }
+        }else{
+            this.addAdviceWithDescription(BaseParameters.ERROR_ADVICE_NULL.getValues(), "Respuesta nula");
+        }
 
-/*
-	@Override
-	public Integer executeListEmployeePaginacion() {
-//		Integer dato = 0;
-		String dato = "";
-		Map<String, Object> total = new HashMap<>();
-		try {
-			dato = this.jdbcUtils.queryForString("sql.find.totalclientes", total);
-		}catch (NoResultException e){
-			dato = "-1";
-			this.addAdviceWithDescription("CCOL00000001","error en conexión");
-			LOGGER.info(e.getMessage());
-		}catch (BusinessException b){
-			dato = "-2";
-			this.addAdviceWithDescription("CCOL00000002","error de negocio");
-			LOGGER.info(b.getMessage());
-		}catch (TimeoutException t){
-			dato = "-3";
-			this.addAdviceWithDescription("CCOL00000003","error time out");
-			LOGGER.info(t.getMessage());
-		}
-		LOGGER.info("TOTAL CLIENTES : {}", dato);
-		return Integer.valueOf(dato);
-	}
-* */
+        return lista;
+    }
 
+    @Override
+    public Integer executeListEmployeePaginacion() {
+        String dato = "";
+        Map<String, Object> total = new HashMap<>();
+        total.put("estatus", 1);
+//		total.put("department", listaDep);
+        LOGGER.info("MAPA SQL : {}", total.toString());
+        try {
+            dato = this.jdbcUtils.queryForString("sql.find.totalemployees", total);
+        }catch (NoResultException e){
+            dato = "-1";
+            this.addAdviceWithDescription(BaseParameters.ERROR_ADVICE_CONEXION.getValues(),"error en conexión");
+            LOGGER.info(e.getMessage());
+        }catch (BusinessException b){
+            dato = "-2";
+            this.addAdviceWithDescription(BaseParameters.ERROR_ADVICE_BUSINESS.getValues(), "error de negocio");
+            LOGGER.info(b.getMessage());
+        }catch (TimeoutException t){
+            dato = "-3";
+            this.addAdviceWithDescription(BaseParameters.ERROR_ADVICE_TIME.getValues(), "error time out");
+            LOGGER.info(t.getMessage());
+        }
+        LOGGER.info("TOTAL EMPLOYEES : {}", dato);
+        return Integer.valueOf(dato);
+    }
+
+    @Override
+    public String executeDistinctDepartment() {
+        List<Map<String, Object>> dato = null;
+        Map<String, Object> manejoErrores = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
+        data.put("estatus", 1);
+        try {
+            dato = this.jdbcUtils.queryForList("sql.find.listardistinctdepartment", data);
+        } catch (NoResultException e) {
+            manejoErrores.put("NoResultException", -1);
+            dato.add(manejoErrores);
+            this.addAdviceWithDescription(BaseParameters.ERROR_ADVICE_CONEXION.getValues(), "error en conexión");
+            LOGGER.info(e.getMessage());
+        } catch (BusinessException b) {
+            manejoErrores.put("BusinessException", -2);
+            dato.add(manejoErrores);
+            this.addAdviceWithDescription(BaseParameters.ERROR_ADVICE_BUSINESS.getValues(), "error de negocio");
+            LOGGER.info(b.getMessage());
+        } catch (TimeoutException t) {
+            manejoErrores.put("TimeoutException", -3);
+            dato.add(manejoErrores);
+            this.addAdviceWithDescription(BaseParameters.ERROR_ADVICE_TIME.getValues(), "error time out");
+            LOGGER.info(t.getMessage());
+        }
+        LOGGER.info("response Impl: {}", dato);
+        String lista = "";
+        LOGGER.info("MANEJO ERRORES SIZE : {}", manejoErrores.toString());
+        if (dato != null && manejoErrores.size() == 0) {
+            for (Map<String, Object> registro : dato) {
+                LOGGER.info("DATO : {}", registro.toString());
+                String department = registro.get("(UPPER(EMPLOYEE_DEPARTMENT))").toString();
+                LOGGER.info("DEPARTMENT : {}", department);
+                lista = lista + "'"+ department+"'" + ",";
+            }
+        } else {
+            this.addAdviceWithDescription("CCOL00000004", "Respuesta nula");
+        }
+        if(!lista.isEmpty())
+            lista = lista.replaceFirst(".$","");
+        return lista;
+    }
+
+    @Override
+    public Map<Integer,String> executeDistinctDepartment_2() {
+        List<Map<String, Object>> dato = null;
+        Map<String, Object> manejoErrores = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
+        data.put("estatus", 1);
+        try {
+            dato = this.jdbcUtils.queryForList("sql.find.listardistinctdepartment", data);
+        } catch (NoResultException e) {
+            manejoErrores.put("NoResultException", -1);
+            dato.add(manejoErrores);
+            this.addAdviceWithDescription(BaseParameters.ERROR_ADVICE_CONEXION.getValues(), "error en conexión");
+            LOGGER.info(e.getMessage());
+        } catch (BusinessException b) {
+            manejoErrores.put("BusinessException", -2);
+            dato.add(manejoErrores);
+            this.addAdviceWithDescription(BaseParameters.ERROR_ADVICE_BUSINESS.getValues(), "error de negocio");
+            LOGGER.info(b.getMessage());
+        } catch (TimeoutException t) {
+            manejoErrores.put("TimeoutException", -3);
+            dato.add(manejoErrores);
+            this.addAdviceWithDescription(BaseParameters.ERROR_ADVICE_TIME.getValues(), "error time out");
+            LOGGER.info(t.getMessage());
+        }
+        LOGGER.info("response Impl: {}", dato);
+
+        LOGGER.info("MANEJO ERRORES SIZE : {}", manejoErrores.toString());
+        Integer cont = 0;
+        Map<Integer,String> response = new HashMap<>();
+        if (dato != null && manejoErrores.size() == 0) {
+            for (Map<String, Object> registro : dato) {
+
+                cont++;
+                response.put(cont,registro.get("(UPPER(EMPLOYEE_DEPARTMENT))").toString());
+                LOGGER.info("DATO : {}", registro);
+                LOGGER.info("ID : {}", cont);
+                LOGGER.info("response : {}", response);
+           /*     LOGGER.info("DATO : {}", registro.toString());
+                String department = registro.get("(UPPER(EMPLOYEE_DEPARTMENT))").toString();
+                LOGGER.info("DEPARTMENT : {}", department);
+                lista = lista + "'"+ department+"'" + ",";*/
+            }
+//            if (response.size()==0){
+//                response.put(0,"empty");
+//            }
+        } else {
+            this.addAdviceWithDescription("CCOL00000004", "Respuesta nula");
+        }
+        return response;
+    }
 }

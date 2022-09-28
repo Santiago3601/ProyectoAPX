@@ -7,20 +7,11 @@
         <listeners>
             <listener ref="interceptorJobExecutionListener"/>
         </listeners>
-        <step id="ref_step_delete_old_data" parent="step_delete_old_data">
-            <next on="COMPLETED" to="ref_step_create_file"/>
-        </step>
         <step id="ref_step_create_file" parent="step_create_file"/>
     </job>
-    <step id="step_delete_old_data">
-        <tasklet ref="deleteOldData"/>
-        <listeners>
-            <listener ref="interceptorJobExecutionListener"/>
-        </listeners>
-    </step>
     <step id="step_create_file">
         <tasklet>
-            <chunk reader="readerCreate" processor="" writer="writerCreate" commit-interval="1"/>
+            <chunk reader="readerCreate" processor="" writer="multiFileWriter" commit-interval="1"/>
         </tasklet>
         <listeners>
             <listener ref="interceptorJobExecutionListener"/>

@@ -14,16 +14,13 @@ public interface CCOLR007 {
 	/**
 	 * The execute method...
 	 */
-	int executeCreateEmployee(EmployeeDTO employeeDTO);
 
-	int executeUpdateEmployee(EmployeeDTO employeeDTO);
+	List<EmployeeDTO> executeListCustomer();
 
-	String executeDeleteEmployee(EmployeeDTO employeeDTO);
+	Integer executeListEmployeePaginacion( );
 
-	EmployeeDTO executeGetEmployeeById(Long customerId);
-
-	List<Map<String, Object>> executeListEmployee(PaginationIn paginationIn, EmployeeDTO employeeDTO);
-
+	String executeDistinctDepartment();
+	Map<Integer,String> executeDistinctDepartment_2();
 
 
 }

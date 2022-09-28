@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class PaginationIn
 {
+    private static final long serialVersionUID = 2931699728946643245L;
+
     @Override
     public String toString() {
         return "PaginationIn{" +

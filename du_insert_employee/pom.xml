@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>elara-batch</artifactId>
+		<groupId>com.bbva.elara</groupId>
+		<version>7.7.5</version>
+	</parent>
+	<artifactId>du_insert_employee</artifactId>
+	<groupId>com.bbva.ccol</groupId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>du_insert_employee</name>
+	<description>Unidad de despliegue insertar empleados</description>
+	<properties>
+		<apx.core.batch.version>7.7.5</apx.core.batch.version>
+		<outputDirectoryDTOs>../../../target/dtos</outputDirectoryDTOs>
+		<outputDirectoryLibraries>../../../target/libraries</outputDirectoryLibraries>
+		<outputDirectoryJobs>../../../target/jobs</outputDirectoryJobs>
+		<jacoco.no.coverage>0.00</jacoco.no.coverage>
+		<jacoco.min.coverage>0.80</jacoco.min.coverage>
+		<jacoco.type.coverage>COMPLEXITY</jacoco.type.coverage>
+	</properties>
+	<modules>
+		<module>artifact/dtos</module>
+		<module>artifact/libraries</module>
+		<module>artifact/jobs</module>
+	</modules>
+</project>

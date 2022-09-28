@@ -24,20 +24,35 @@
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	<bean id="deleteOldData" class="com.bbva.ccol.batch.DeleteOldData" scope="step">
-		<property name="ccolR007" ref="ccolR007"/>
-	</bean>
 
 	<bean id="readerCreate" class="com.bbva.ccol.batch.ReaderCreate" scope="step">
 		<property name="ccolR007" ref="ccolR007"/>
-		<property name="departament" value="#{jobParameters['departamentRead]}"/>
+		<property name="oDate"  value="#{jobParameters['oDate']}"/>
+		<property name="department"  value="#{jobParameters['department']}"/>
 	</bean>
-
-	<bean id="writerCreate" class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
-		<property name="resource" value="file:/fichtemcomp/datsal/CCOL_D02_#{jobParameters['oDate']}_cus.csv"/>
+	<!--	<bean id="writerCreate" class="com.bbva.ccol.batch.WriterCreate" scope="step"/>-->
+	<bean id="suffixCreator" class="com.bbva.ccol.batch.SuffixCreator" scope="step">
+		<property name="ccolR007" ref="ccolR007"/>
+	</bean>
+	<bean id="writer" class="org.springframework.batch.item.file.FlatFileItemWriter">
 		<property name="lineAggregator">
-			<bean class="org.springframework.batch.item.file.transform.PassThroughLineAggregator"/>
+			<bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+				<!--		               <property name="fieldExtractor">-->
+				<!--		                   <bean class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">-->
+				<!--		                       <property name="names" value="employee_name,employee_department,employee_rfc,employee_email,employee_phone,employee_address,-->
+				<!--							employee_registration_date,employee_status,salary"/>-->
+				<!--		                   </bean>-->
+				<!--		               </property>-->
+			</bean>
 		</property>
 	</bean>
+
+	<bean id="multiFileWriter" class="org.springframework.batch.item.file.MultiResourceItemWriter" scope="step">
+		<property name="resource" value="file:/fichtemcomp/datsal/CCOL_D02_#{jobParameters['oDate']}_#{jobParameters['department']}"/>
+		<property name="itemCountLimitPerResource" value="1"/>
+		<property name="resourceSuffixCreator" ref="suffixCreator"/>
+		<property name="delegate" ref="writer"/>
+	</bean>
+
 
 </beans>
